@@ -19,10 +19,6 @@ public/system/*
 public/assets
 .idea/
 projectFilesBackup/
-config/database.yml
-config/redis_client.yml
-config/bluesky.yml
-config/environments/development.rb
 dump.rdb
 
 ## Environment normalisation:
