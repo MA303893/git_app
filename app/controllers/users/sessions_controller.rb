@@ -7,9 +7,15 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    # super
+    render json: {
+        data: {
+            message: "Welcome #{current_user.name}",
+            user: current_user
+        }
+    }, status: 200
+  end
 
   # DELETE /resource/sign_out
   # def destroy
