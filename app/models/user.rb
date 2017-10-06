@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   before_save :ensure_authentication_token!
 
+  BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
+
   def generate_secure_token_string
     # SecureRandom.urlsafe_base64(25).tr('lIO0', 'sxyz')
     Devise.friendly_token(50)
@@ -43,5 +45,12 @@ class User < ApplicationRecord
   def reset_authentication_token!
     self.auth_token = generate_authentication_token
     self.save
+  end
+
+  def serializable_hash(options = nil)
+    options ||= {}
+    options[:except] = Array(options[:except])
+    options[:except].concat BLACKLIST_FOR_SERIALIZATION
+    super(options)
   end
 end

@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  skip_before_action :authenticate_user!, :only => [:create, :new]
+  skip_before_action :authenticate_user!,:authenticate_user_from_token!, :only => [:create, :new]
   skip_before_action :verify_signed_out_user, :only => [:destroy], :if => Proc.new {|c| c.request.format == 'application/json'}
   # skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
   respond_to :json, :html
