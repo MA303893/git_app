@@ -53,3 +53,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'omniauth'
+# gem 'rails_admin'
+# gem 'rails_admin_flatly_theme', github: 'konjoot/rails_admin_flatly_theme'
+gem 'rails_admin_rollincode', '~> 1.0'
+gem 'rails_admin', git: 'https://github.com/sferik/rails_admin.git'
