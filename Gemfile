@@ -53,3 +53,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'omniauth'
+gem 'activeadmin' , git: 'git://github.com/gregbell/active_admin.git'
+gem 'active_admin_flat_skin'
+gem "font-awesome-rails"
