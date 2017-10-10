@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pages
+  mount Ckeditor::Engine => '/ckeditor'
   root to: "home#index"
   get "home/index"
   get "get_user", to: "home#get_user"
