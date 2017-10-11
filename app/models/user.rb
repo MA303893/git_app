@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   before_save :ensure_authentication_token!
 
+  has_one :school, dependent: :destroy
+
+  scope :schools, -> { where(user_type: 'school') }
+
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
 
   def generate_secure_token_string
