@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   has_one :school, dependent: :destroy
 
-  scope :schools, -> { where(user_type: 'school') }
+  scope :school_admin, -> { where(user_type: 'school_admin') }
 
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
 
