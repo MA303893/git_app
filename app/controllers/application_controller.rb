@@ -5,17 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   respond_to :json, :html
 
-  before_action :cor
-
-  helper_method :sort_column, :sort_direction
-
-  def cor
-    headers["Access-Control-Allow-Origin"]  = "*"
-    headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE}.join(",")
-    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-API-EMAIL X-API-Token}.join(",")
-    head(:ok) if request.request_method == "OPTIONS"
-  end
-
   protected
 
   def authenticate_user_from_token!
