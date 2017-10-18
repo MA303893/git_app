@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  #include Devise::Models::Lockable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
 
@@ -12,6 +13,14 @@ class User < ApplicationRecord
   scope :school_admin, -> { where(user_type: 'school_admin') }
 
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
+
+  def attempts_exceeded?
+    self.failed_attempts >= self.class.maximum_attempts
+  end
+
+  def attempts_remaining
+    (self.failed_attempts < self.class.maximum_attempts) ? self.class.maximum_attempts - self.failed_attempts : 0
+  end
 
   def generate_secure_token_string
     # SecureRandom.urlsafe_base64(25).tr('lIO0', 'sxyz')

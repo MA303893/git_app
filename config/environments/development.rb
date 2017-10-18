@@ -59,7 +59,7 @@ Rails.application.configure do
       authentication: "plain",
       enable_starttls_auto: true,
       user_name: 'amullyamanish@gmail.com',
-      password: ENV['GMAIL_PASSWORD ']
+      password: ENV['GMAIL_PASSWORD']
   }
   # ActionMailer Config
   config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
