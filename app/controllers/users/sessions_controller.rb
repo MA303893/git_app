@@ -29,12 +29,16 @@ class Users::SessionsController < Devise::SessionsController
       }
       format.json {
         return invalid_login_attempt unless resource
-        if resource.valid_password?(params[:user][:password])
-          resource.failed_attempts = 0
-          resource.save(validate: false)
-          render :json => {user: {email: resource.email, :auth_token => resource.auth_token}, success: true}, success: true, status: :created
+        if resource.active_for_authentication?
+          if resource.valid_password?(params[:user][:password])
+            resource.failed_attempts = 0
+            resource.save(validate: false)
+            render :json => {user: {email: resource.email, :auth_token => resource.auth_token}, success: true}, success: true, status: :created
+          else
+            invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
+          end
         else
-          invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
+          render json: {success: false, message: 'Your account is inctive. Please follow the instructions in email to confirm it.'}, status: 401 and return
         end
       }
     end
