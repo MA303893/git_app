@@ -32,7 +32,7 @@ class Users::SessionsController < Devise::SessionsController
         if resource.valid_password?(params[:user][:password])
           resource.failed_attempts = 0
           resource.save(validate: false)
-          render :json => {user: {email: resource.email, :auth_token => resource.auth_token}}, success: true, status: :created
+          render :json => {user: {email: resource.email, :auth_token => resource.auth_token}, success: true}, success: true, status: :created
         else
           invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
         end
