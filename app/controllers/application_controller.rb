@@ -2,8 +2,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   protect_from_forgery with: :null_session, :if => Proc.new {|c| c.request.format == 'application/json'}
   before_action :authenticate_user_from_token! , :if => Proc.new {|c| c.request.format == 'application/json'}
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:user_unlock]
   respond_to :json, :html
+
+
+
+  def user_unlock
+    redirect_to :controller => 'users/unlocks', :action => 'show', unlock_token: params[:unlock_token]
+  end
 
   protected
 
