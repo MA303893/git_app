@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021183049) do
+ActiveRecord::Schema.define(version: 20171022171515) do
+
+  create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "applicant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_applicant_documents_on_applicant_id"
+  end
 
   create_table "applicants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
@@ -18,6 +25,30 @@ ActiveRecord::Schema.define(version: 20171021183049) do
     t.string "first_name"
     t.string "last_name"
     t.string "alt_email"
+    t.string "country_of_citizenship"
+    t.boolean "other_citizenship"
+    t.string "other_citizenship_country"
+    t.boolean "eu_passport"
+    t.string "country_of_birth"
+    t.string "gender"
+    t.string "marital_status"
+    t.date "dob"
+    t.boolean "criminal_convicted"
+    t.text "criminal_convicted_value"
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "suburb"
+    t.string "city"
+    t.string "state"
+    t.string "postcode"
+    t.string "country"
+    t.string "phone"
+    t.string "skype"
+    t.text "link_to_video"
+    t.string "emergency_contact_name"
+    t.string "emergency_contact_email"
+    t.string "emergency_contact_phone"
+    t.string "emergency_contact_relation"
   end
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -27,6 +58,16 @@ ActiveRecord::Schema.define(version: 20171021183049) do
     t.datetime "updated_at", null: false
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["job_id"], name: "index_applications_on_job_id"
+  end
+
+  create_table "dependents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "applicant_id"
+    t.string "name"
+    t.string "gender"
+    t.date "dob"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_dependents_on_applicant_id"
   end
 
   create_table "experiences", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -93,8 +134,10 @@ ActiveRecord::Schema.define(version: 20171021183049) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "applicant_documents", "applicants"
   add_foreign_key "applications", "applicants"
   add_foreign_key "applications", "jobs"
+  add_foreign_key "dependents", "applicants"
   add_foreign_key "experiences", "applicants"
   add_foreign_key "licences", "applicants"
   add_foreign_key "qualifications", "applicants"
