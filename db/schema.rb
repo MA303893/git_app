@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022171515) do
+ActiveRecord::Schema.define(version: 20171022172932) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20171022171515) do
     t.string "emergency_contact_email"
     t.string "emergency_contact_phone"
     t.string "emergency_contact_relation"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.string "resume_file_name"
+    t.string "resume_content_type"
+    t.integer "resume_file_size"
+    t.datetime "resume_updated_at"
   end
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
