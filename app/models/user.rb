@@ -14,6 +14,13 @@ class User < ApplicationRecord
 
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
 
+  def send_devise_notification(notification, *args)
+    # MailerJob.perform_later(notification.to_s, self, *args)
+    # binding.pry
+    devise_mailer.send(notification, self, *args).deliver_later
+    # MailerWorker.perform_async(notification, self, *args)
+  end
+
   def attempts_exceeded?
     self.failed_attempts >= self.class.maximum_attempts
   end
