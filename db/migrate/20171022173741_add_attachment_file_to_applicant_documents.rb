@@ -1,4 +1,4 @@
-class AddAttachmentFileToApplicantDocuments < ActiveRecord::Migration
+class AddAttachmentFileToApplicantDocuments < ActiveRecord::Migration[5.1]
   def self.up
     change_table :applicant_documents do |t|
       t.attachment :file
