@@ -53,9 +53,9 @@ class Users::SessionsController < Devise::SessionsController
         user = User.find_by_auth_token(request.headers['X-API-TOKEN'])
         if user
           user.reset_authentication_token!
-          render :json => {:message => 'Session deleted.', sucsess: true}, :success => true, :status => 200
+          render :json => {:message => 'Session deleted.', success: true}, :success => true, :status => 200
         else
-          render :json => {:message => 'Invalid token.', sucsess: false}, :status => 404
+          render :json => {:message => 'Invalid token.', success: false}, :status => 404
         end
       }
     end
