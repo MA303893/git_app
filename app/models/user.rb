@@ -9,6 +9,7 @@ class User < ApplicationRecord
   before_save :ensure_authentication_token!
 
   has_one :school, dependent: :destroy
+  has_one :applicant, dependent: :destroy
 
   scope :school_admin, -> { where(user_type: 'school_admin') }
 

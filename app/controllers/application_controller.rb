@@ -13,21 +13,33 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def get_email_header
+    request.headers["X-API-EMAIL"].presence
+  end
+
+  def get_token_header
+    request.headers["X-API-TOKEN"].presence
+  end
+
   def authenticate_user_from_token!
-    user_email = request.headers["X-API-EMAIL"].presence
-    user_auth_token = request.headers["X-API-TOKEN"].presence
+    user_email = get_email_header
+    user_auth_token = get_token_header
     user = user_email && User.find_by_email(user_email)
 
-    # Notice how we use Devise.secure_compare to compare the token
+    # Notice how we use Dervise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
     # if request.format == 'application/json'
       if user && Devise.secure_compare(user.auth_token, user_auth_token)
         sign_in(user, store: false)
       else
-        (render :json => {message: "Sorry invalid email or token."}, success: false, status: 401)
+        render :json => unsuccessful_response("Sorry invalid email or token."), success: false, status: 401
       end
     # end
+  end
+
+  def unsuccessful_response(message)
+    {message: message, success: false}
   end
 
 end

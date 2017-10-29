@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022173741) do
+ActiveRecord::Schema.define(version: 20171029161028) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20171022173741) do
     t.string "resume_content_type"
     t.integer "resume_file_size"
     t.datetime "resume_updated_at"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_applicants_on_user_id"
   end
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
