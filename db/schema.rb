@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029161028) do
+ActiveRecord::Schema.define(version: 20171101174557) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20171029161028) do
     t.datetime "updated_at", null: false
     t.string "auth_token"
     t.string "user_type"
+    t.string "timezone"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

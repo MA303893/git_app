@@ -13,7 +13,13 @@ Rails.application.routes.draw do
   }
   namespace :applicants do
     get "profile"
+    # get "", to: "#qualifications_and_licences"
+    get "experiences"
+    get "extra"
+    get "referals"
   end
+  match "applicants/qualifications", to: "applicants#qualifications_and_licences", :via => [:get]
+  get 'timezones', to: "application#timezones"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

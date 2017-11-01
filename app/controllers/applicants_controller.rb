@@ -11,18 +11,38 @@ class ApplicantsController < ApplicationController
 
   def qualifications_and_licences
     #todo
+    if @applicant
+      render :json => @applicant.qualification_and_licences_json
+    else
+      render :json => unsuccessful_response("Applicant Not Found"), success: false, status: 404
+    end
   end
 
-  def experience
+  def experiences
     #todo
+    if @applicant
+      render :json => @applicant.qualification_and_licences_json
+    else
+      render :json => unsuccessful_response("Applicant Not Found"), success: false, status: 404
+    end
   end
 
-  def extra_docs
+  def extra
     #todo
+    if @applicant
+      render :json => @applicant.qualification_and_licences_json
+    else
+      render :json => unsuccessful_response("Applicant Not Found"), success: false, status: 404
+    end
   end
 
-  def refernces
+  def referals
     #todo
+    if @applicant
+      render :json => @applicant.qualification_and_licences_json
+    else
+      render :json => unsuccessful_response("Applicant Not Found"), success: false, status: 404
+    end
   end
 
   private

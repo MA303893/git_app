@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
     redirect_to :controller => 'users/unlocks', :action => 'show', unlock_token: params[:unlock_token]
   end
 
+  def timezones
+    zones = ActiveSupport::TimeZone.all
+    if zones
+      render :json => {time_zones: zones.map(&:name)}, success: true, status: 200
+    end
+  end
+
   protected
 
   def get_email_header

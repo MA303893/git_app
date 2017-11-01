@@ -27,8 +27,38 @@ class Applicant < ApplicationRecord
         contact_details:{},
         criminal_convictions:{},
         first_name: "",
-        last_anme: "",
+        last_name: "",
         link_to_video: "",
+        success: true
+    }
+  end
+
+  def qualification_and_licences_json
+    response = {
+        qualifications: [],
+        licences: [],
+        success: true
+    }
+  end
+
+  def experiences_json
+    response = {
+     experiences: [],
+     success: true
+    }
+  end
+
+  def extra_json
+    #todo
+    response = {
+        success: true
+    }
+  end
+
+  def referals_json
+    #todo
+    response = {
+        referals: [],
         success: true
     }
   end
