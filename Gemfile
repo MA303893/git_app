@@ -55,3 +55,6 @@ gem 'devise'
 gem 'omniauth'
 gem 'rack-cors'
 gem "paperclip"
+
+gem 'city-state'
+gem 'i18n_data'

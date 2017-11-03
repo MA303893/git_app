@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101174557) do
+ActiveRecord::Schema.define(version: 20171103053413) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -62,6 +62,11 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.integer "resume_file_size"
     t.datetime "resume_updated_at"
     t.bigint "user_id"
+    t.string "title"
+    t.string "middle_name"
+    t.string "website"
+    t.string "skype_name"
+    t.string "alias_name"
     t.index ["user_id"], name: "index_applicants_on_user_id"
   end
 
@@ -74,6 +79,12 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.index ["job_id"], name: "index_applications_on_job_id"
   end
 
+  create_table "curriculums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dependents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
     t.string "name"
@@ -81,6 +92,7 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.date "dob"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "relation"
     t.index ["applicant_id"], name: "index_dependents_on_applicant_id"
   end
 
@@ -88,6 +100,15 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.bigint "applicant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "curriculum"
+    t.string "name_of_school"
+    t.string "country"
+    t.string "region"
+    t.string "school_level"
+    t.string "position"
+    t.string "subjects_taught"
+    t.date "from"
+    t.date "to"
     t.index ["applicant_id"], name: "index_experiences_on_applicant_id"
   end
 
@@ -98,10 +119,26 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.index ["school_id"], name: "index_jobs_on_school_id"
   end
 
+  create_table "languages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "applicant_id"
+    t.string "name"
+    t.string "proficiency"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_languages_on_applicant_id"
+  end
+
   create_table "licences", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "country"
+    t.string "registration_no"
+    t.string "copy_file_name"
+    t.string "copy_content_type"
+    t.integer "copy_file_size"
+    t.datetime "copy_updated_at"
     t.index ["applicant_id"], name: "index_licences_on_applicant_id"
   end
 
@@ -109,7 +146,19 @@ ActiveRecord::Schema.define(version: 20171101174557) do
     t.bigint "applicant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "place_of_study"
+    t.string "country"
+    t.string "subjects"
+    t.string "duration"
+    t.string "date_of_completion"
     t.index ["applicant_id"], name: "index_qualifications_on_applicant_id"
+  end
+
+  create_table "school_levels", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -154,6 +203,7 @@ ActiveRecord::Schema.define(version: 20171101174557) do
   add_foreign_key "applications", "jobs"
   add_foreign_key "dependents", "applicants"
   add_foreign_key "experiences", "applicants"
+  add_foreign_key "languages", "applicants"
   add_foreign_key "licences", "applicants"
   add_foreign_key "qualifications", "applicants"
 end

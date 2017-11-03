@@ -14,7 +14,26 @@ class ApplicationController < ActionController::Base
   def timezones
     zones = ActiveSupport::TimeZone.all
     if zones
-      render :json => {time_zones: zones.map(&:name)}, success: true, status: 200
+      render :json => {time_zones: zones.map(&:name), success: true}, success: true, status: 200
+    end
+  end
+
+  def languages
+    langauges = I18nData.languages.values
+    render :json => {languages: languages, success: true}, success: true, status: 200
+  end
+
+  def countries
+    countries = CS.get
+    render :json => {countries: countries, success: true}, success: true, status: 200
+  end
+
+  def states
+    states = CS.get(params[:state])
+    unless states.blank?
+      render :json => {states: states, success: true}, success: true, status: 200
+    else
+      render :json => {states: states, success: false, message: "Invalid country code OR state not found for country."}, success: true, status: 404
     end
   end
 
