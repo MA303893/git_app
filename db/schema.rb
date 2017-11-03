@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103053413) do
+ActiveRecord::Schema.define(version: 20171103111457) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 20171103053413) do
     t.string "website"
     t.string "skype_name"
     t.string "alias_name"
+    t.boolean "registered_teacher"
+    t.integer "total_relevant_experience"
+    t.text "can_coach_activities"
+    t.text "interests"
+    t.text "skills"
+    t.text "other_experiences"
+    t.text "comments"
     t.index ["user_id"], name: "index_applicants_on_user_id"
   end
 
@@ -155,6 +162,32 @@ ActiveRecord::Schema.define(version: 20171103053413) do
     t.index ["applicant_id"], name: "index_qualifications_on_applicant_id"
   end
 
+  create_table "references", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "applicant_id"
+    t.string "name"
+    t.string "relation"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone"
+    t.string "address_lin1"
+    t.string "address_line2"
+    t.string "suburb"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "school_name"
+    t.string "school_city"
+    t.string "school_state"
+    t.string "school_country"
+    t.string "worked_from"
+    t.string "worked_to"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_references_on_applicant_id"
+  end
+
   create_table "school_levels", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "level"
     t.datetime "created_at", null: false
@@ -206,4 +239,5 @@ ActiveRecord::Schema.define(version: 20171103053413) do
   add_foreign_key "languages", "applicants"
   add_foreign_key "licences", "applicants"
   add_foreign_key "qualifications", "applicants"
+  add_foreign_key "references", "applicants"
 end
