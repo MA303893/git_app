@@ -159,7 +159,7 @@ class Applicant < ApplicationRecord
   def create_extra_docs
     docs = []
     self.applicant_documents.each do |ad|
-      file_name: ad.file_file_name
+      file_name: ad.file_file_name,
       file: ad.file.exists? ? ad.file.url : nil,
     end
   end
