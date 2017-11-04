@@ -159,9 +159,13 @@ class Applicant < ApplicationRecord
   def create_extra_docs
     docs = []
     self.applicant_documents.each do |ad|
-      file_name: ad.file_file_name,
-      file: ad.file.exists? ? ad.file.url : nil,
+      res = {
+          file_name: ad.file_file_name,
+          file: ad.file.exists? ? ad.file.url : nil
+      }
+      docs << res
     end
+    docs
   end
 
   def referals_json
