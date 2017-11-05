@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   end
   match "applicants/qualifications", to: "applicants#qualifications_and_licences", :via => [:get]
   get 'timezones', to: "application#timezones"
+  get 'languages', to: "application#languages"
+  get 'countries', to: "application#countries"
+  get 'states', to: "application#states"
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

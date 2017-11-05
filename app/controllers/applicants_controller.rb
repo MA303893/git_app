@@ -20,14 +20,12 @@ class ApplicantsController < ApplicationController
   end
 
   def extra
-    #todo
     if @applicant
       render :json => @applicant.extra_json
     end
   end
 
   def referals
-    #todo
     if @applicant
       render :json => @applicant.referals_json
     end
