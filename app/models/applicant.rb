@@ -57,7 +57,7 @@ class Applicant < ApplicationRecord
             emergency_contact_email: self.emergency_contact_email,
             emergency_contact_phone: self.emergency_contact_phone,
             relationship_to_candidate: self.emergency_contact_relation
-        }
+        },
         first_name: self.first_name,
         last_name: self.last_name,
         link_to_video: self.link_to_video,
