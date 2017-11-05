@@ -52,6 +52,12 @@ class Applicant < ApplicationRecord
             criminal_convicted: self.criminal_convicted,
             criminal_convicted_value: self.criminal_convicted_value
         },
+        emergency_contact: {
+            emergency_contact_name: self.emergency_contact_name,
+            emergency_contact_email: self.emergency_contact_email,
+            emergency_contact_phone: self.emergency_contact_phone,
+            relationship_to_candidate: self.emergency_contact_relation
+        }
         first_name: self.first_name,
         last_name: self.last_name,
         link_to_video: self.link_to_video,
@@ -204,6 +210,25 @@ class Applicant < ApplicationRecord
     referals
   end
 
+  PERSONAL_DETAILS_ALLOWED_PARAMS = [:country_of_citizenship, :country_of_birth, :eu_passport, :dob, :gender, :marital_status, :other_citizenship, :other_citizenship_country]
+  PERSONAL_CONTACT_ALLOWED_PARAMS = [:address_line_1, :address_line_2, :suburb, :city, :state, :postcode, :country, :phone, :alt_email, :skype]
+
+  def update_personal_details(params)
+    self.update_attributes(params.slice(*PERSONAL_DETAILS_ALLOWED_PARAMS))
+  end
+
+  def update_contact_detail(params)
+    ActiveRecord::Base.transaction do
+      user = self.user
+      user.email = params[:email]
+      user.save
+      self.update_attributes(params.slice(*PERSONAL_CONTACT_ALLOWED_PARAMS))
+    end
+  end
+
+  def update_criminal_details(params)
+
+  end
   def self.get_applicant_by_auth_token_and_email auth_token, email
     self.joins(:user).find_by('users.auth_token': auth_token, 'users.email': email)
   end

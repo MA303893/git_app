@@ -1,6 +1,12 @@
 class ApplicantsController < ApplicationController
   before_action :set_applicant#, only: [:profile, :qualifications_and_licences]
 
+  def update_personal_details
+    if @applicant
+      @applicant.update_personal_details
+    end
+  end
+
   def profile
     if @applicant
       render :json => @applicant.personal_details_json, success: true, status: 200
