@@ -114,6 +114,7 @@ class Applicant < ApplicationRecord
     self.qualifications.each do |q|
       res = {
           id: q.id,
+          qualification_type: q.qualification_type,
           name: q.name,
           place_of_study: q.place_of_study,
           country: q.country,
