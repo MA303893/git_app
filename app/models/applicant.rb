@@ -144,7 +144,7 @@ class Applicant < ApplicationRecord
           region: e.region,
           school_level: e.school_level,
           position: e.position,
-          subjects_taught: e.subjects_taught,
+          subjects_taught: (eval(e.subjects_taught) rescue nil),
           from: e.from,
           to: e.to
       }
