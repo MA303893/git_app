@@ -117,7 +117,7 @@ class Applicant < ApplicationRecord
           name: q.name,
           place_of_study: q.place_of_study,
           country: q.country,
-          subjects: q.subjects,
+          subjects: eval(q.subjects) rescue nil,
           duration: q.duration,
           date_of_completion: q.date_of_completion
       }
