@@ -70,6 +70,7 @@ class Applicant < ApplicationRecord
     dependents = []
     self.dependents.each do |d|
       res = {
+          id: d.id,
           name: d.name,
           gender: d.gender,
           dob: d.dob,
@@ -96,6 +97,7 @@ class Applicant < ApplicationRecord
     licences = []
     self.licences.each do |l|
       res = {
+          id: l.id,
           name: l.name,
           country: l.country,
           registration_no: l.registration_no,
@@ -111,6 +113,7 @@ class Applicant < ApplicationRecord
     qualifications = []
     self.qualifications.each do |q|
       res = {
+          id: q.id,
           name: q.name,
           place_of_study: q.place_of_study,
           country: q.country,
@@ -125,7 +128,7 @@ class Applicant < ApplicationRecord
 
   def experiences_json
     response = {
-        experiences: [],
+        experiences: create_experiences_json,
         success: true
     }
   end
@@ -134,6 +137,7 @@ class Applicant < ApplicationRecord
     experiences = []
     self.experiences.each do |e|
       res = {
+          id: e.id,
           curriculum: e.curriculum,
           name_of_school: e.name_of_school,
           country: e.country,
@@ -166,6 +170,7 @@ class Applicant < ApplicationRecord
     docs = []
     self.applicant_documents.each do |ad|
       res = {
+          id: ad.id,
           file_name: ad.file_file_name,
           file: ad.file.exists? ? ad.file.url : nil
       }
@@ -185,6 +190,7 @@ class Applicant < ApplicationRecord
     referals = []
     self.referals.each do |r|
       res = {
+          id: r.id,
           name: r.name,
           relation: r.relation,
           first_name: r.first_name,
@@ -212,7 +218,8 @@ class Applicant < ApplicationRecord
 
   PERSONAL_DETAILS_ALLOWED_PARAMS = [:country_of_citizenship, :country_of_birth, :eu_passport, :dob, :gender, :marital_status, :other_citizenship, :other_citizenship_country]
   PERSONAL_CONTACT_ALLOWED_PARAMS = [:address_line_1, :address_line_2, :suburb, :city, :state, :postcode, :country, :phone, :alt_email, :skype]
-
+  PERSONAL_CRIMINAL_PARAMS = [:criminal_convicted, :criminal_convicted_value]
+  PERSONAL_DETAILS_EMERGENCY_PARAMS = [:emergency_contact_name, :emergency_contact_email, :emergency_contact_phone, :emergency_contact_relation]
   def update_personal_details(params)
     self.update_attributes(params.slice(*PERSONAL_DETAILS_ALLOWED_PARAMS))
   end
@@ -227,8 +234,13 @@ class Applicant < ApplicationRecord
   end
 
   def update_criminal_details(params)
-
+    self.update_attributes(params.slice(*PERSONAL_CRIMINAL_PARAMS))
   end
+
+  def update_emergency_contact(params)
+    self.update_attributes(params.slice(*PERSONAL_DETAILS_EMERGENCY_PARAMS))
+  end
+
   def self.get_applicant_by_auth_token_and_email auth_token, email
     self.joins(:user).find_by('users.auth_token': auth_token, 'users.email': email)
   end
