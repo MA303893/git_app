@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103111457) do
+ActiveRecord::Schema.define(version: 20171106173735) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -157,8 +157,9 @@ ActiveRecord::Schema.define(version: 20171103111457) do
     t.string "place_of_study"
     t.string "country"
     t.string "subjects"
-    t.string "duration"
-    t.string "date_of_completion"
+    t.integer "duration"
+    t.date "date_of_completion"
+    t.string "qualification_type"
     t.index ["applicant_id"], name: "index_qualifications_on_applicant_id"
   end
 
