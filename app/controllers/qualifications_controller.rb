@@ -1,7 +1,7 @@
 class QualificationsController < ApplicationController
   include ApplicantConcern
 
-  def create_qualification
+  def create_qualifications
     qual_params[:subjects] = qual_params[:subjects].to_s rescue nil
     qual = Qualification.create_or_update_qualification(@applicant, qual_params)
     if qual
