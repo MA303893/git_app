@@ -39,6 +39,6 @@ class QualificationsController < ApplicationController
   private
 
   def qual_params
-    params.require(:data).permit(Qualification::QUAL_ALLOWED_PARAMS)
+    params.require(:data).permit(Qualification::QUAL_ALLOWED_PARAMS).merge(params[:id])
   end
 end
