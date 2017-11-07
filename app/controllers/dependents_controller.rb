@@ -4,7 +4,7 @@ class DependentsController < ApplicationController
   def create_dependent
     dependent = Dependent.create_or_update_dependent(@applicant, params)
     if dependent
-      render :json => {dependent: dependent.as_json, success: true}, success: true, status: 200
+      render :json => {dependent: @applicant.dependents.as_json, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Dependent could not be added! Please try again."), success: false, status: 400
     end
@@ -13,7 +13,7 @@ class DependentsController < ApplicationController
   def update_dependent
     dependent = Dependent.create_or_update_dependent(@applicant, params)
     if dependent
-      render :json => {dependent: dependent.as_json, success: true}, success: true, status: 200
+      render :json => {dependent: @applicant.dependents.as_json, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Dependent could not be updated! Please try again."), success: false, status: 400
     end

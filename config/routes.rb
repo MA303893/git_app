@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get 'states', to: "application#states"
 
   #Update applicant profile
-  put 'applicants/profile/picture', to: 'applicants#update_picture'
+  post 'applicants/profile/picture', to: 'applicants#update_picture'
   put 'applicants/profile/:type', to: 'applicants#update_profile'
 
   #dependent

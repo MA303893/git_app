@@ -11,7 +11,7 @@ class Applicant < ApplicationRecord
   has_many :references, dependent: :destroy
 
   #adding paperclip for profile pic upload
-  has_attached_file :picture, styles: {medium: "300x300>", small: "150x150>", thumb: "100x100>"}, default_url: "/images/:style/missing.png"
+  has_attached_file :picture, styles: {medium: "220x189>", small: "150x150>", thumb: "100x100>"}, default_url: "/images/:style/missing.png"
   validates_attachment_size :picture, :less_than => 1.megabytes
   validates_attachment :picture, content_type: {content_type: ['image/jpeg', 'image/png']}
 
