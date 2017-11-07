@@ -2,11 +2,11 @@ class ApplicantsController < ApplicationController
   before_action :set_applicant #, only: [:profile, :qualifications_and_licences]
   # skip_before_action :authenticate_user!
 
-  def update_personal_details
-    if @applicant
-      @applicant.update_personal_details
-    end
-  end
+  # def update_personal_details
+  #   if @applicant
+  #     @applicant.update_personal_details
+  #   end
+  # end
 
   def profile
     if @applicant
@@ -15,14 +15,25 @@ class ApplicantsController < ApplicationController
   end
 
   def update_profile
+
     case params[:type]
       when 'personal_details'
+        @applicant.update_personal_details(params)
       when 'contact_details'
+        @applicant.update_contact_detail(params)
       when 'criminal_convictions'
+        @applicant.update_criminal_details(params)
       when 'emergency_contact'
+        @applicant.update_emergency_contact(params)
       when 'other'
-      else
-        #update fn ln, link_to_video etc
+        @applicant.update_other_info(params)
+      when 'extra'
+        @applicant.update_extra_info(params)
+    end
+    if @applicant.errors.count == 0
+      render :json => @applicant.personal_details_json, success: true, status: 200
+    else
+      render :json => unsuccessful_response("Update unsuccessful!").merge({errors: @applicant.errors}), success: false, status: 400
     end
   end
 
@@ -30,7 +41,7 @@ class ApplicantsController < ApplicationController
     if @applicant.update_attributes(picture: params[:picture])
       render :json => {profile_pic_url: @applicant.picture.url, success: true}, success: true, status: 200
     else
-      render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 404
+      render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 400
     end
   end
 

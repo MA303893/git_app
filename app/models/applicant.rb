@@ -222,9 +222,13 @@ class Applicant < ApplicationRecord
   PERSONAL_CRIMINAL_PARAMS = [:criminal_convicted, :criminal_convicted_value]
   PERSONAL_DETAILS_EMERGENCY_PARAMS = [:emergency_contact_name, :emergency_contact_email, :emergency_contact_phone, :emergency_contact_relation]
   EXTRA_INFORMATION_PARAMS = [:registered_teacher, :can_coach_activities, :interests, :skills, :other_experiences, :comments]
-
+  OTHER_INFO_PARAMS = [:first_name, :last_name, :link_to_video]
   def update_extra_info(params)
     self.update_attributes(params.slice(*EXTRA_INFORMATION_PARAMS))
+  end
+
+  def update_other_info(params)
+    self.update_attributes(params.slice(*OTHER_INFO_PARAMS))
   end
 
   def update_personal_details(params)
