@@ -13,7 +13,7 @@ class QualificationsController < ApplicationController
 
   def update_qualifications
     params[:subjects] = params[:subjects].to_s
-    qual = Qualification.create_or_update_qualification(@applicant, qual_params)
+    qual = Qualification.create_or_update_qualification(@applicant, qual_params, params[:id])
     if qual
       render :json => {qualifications: @applicant.qualifications.as_json, success: true}, success: true, status: 200
     else
@@ -39,6 +39,6 @@ class QualificationsController < ApplicationController
   private
 
   def qual_params
-    params.require(:data).permit(Qualification::QUAL_ALLOWED_PARAMS).merge(params[:id])
+    params.require(:data).permit(Qualification::QUAL_ALLOWED_PARAMS)
   end
 end

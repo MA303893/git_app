@@ -4,8 +4,8 @@ class Dependent < ApplicationRecord
   DEPENDENT_ALLOWED_PARAMS = [:name, :gender, :dob, :relation]
 
 
-  def self.create_or_update_dependent(applicant, params)
-    if params[:id]
+  def self.create_or_update_dependent(applicant, params, id = nil)
+    if id
       dependent = Dependent.find_dependent_by_applicant(applicant, params[:id])
       if dependent
         dependent.update_attributes(params.slice(*DEPENDENT_ALLOWED_PARAMS))

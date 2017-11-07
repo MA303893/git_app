@@ -3,8 +3,8 @@ class Qualification < ApplicationRecord
 
   QUAL_ALLOWED_PARAMS = [:name, :place_of_study, :country, :subjects, :duration, :date_of_completion, :qualification_type]
 
-  def self.create_or_update_qualification(applicant, params)
-    if params[:id]
+  def self.create_or_update_qualification(applicant, params, id = nil)
+    if id
       qual = Qualification.find_qualification_by_applicant(applicant, params[:id])
       if qual
         qual.update_attributes(params.slice(*QUAL_ALLOWED_PARAMS))

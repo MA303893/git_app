@@ -11,7 +11,7 @@ class DependentsController < ApplicationController
   end
 
   def update_dependent
-    dependent = Dependent.create_or_update_dependent(@applicant, dependent_params)
+    dependent = Dependent.create_or_update_dependent(@applicant, dependent_params, params[:id])
     if dependent
       render :json => {dependent: @applicant.dependents.as_json, success: true}, success: true, status: 200
     else
@@ -37,7 +37,7 @@ class DependentsController < ApplicationController
   private
 
   def dependent_params
-    params.require(:data).permit(Dependent::DEPENDENT_ALLOWED_PARAMS).merge(params[:id])
+    params.require(:data).permit(Dependent::DEPENDENT_ALLOWED_PARAMS)
   end
 
 end
