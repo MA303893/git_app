@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   #qualifications
   post 'applicants/qualifications', to: 'qualifications#create_qualifications'
   put 'applicants/qualifications/:id', to: 'qualifications#update_qualifications'
+  delete 'applicants/qualifications/:id', to: 'qualifications#destroy'
 
   #licences
   post 'applicants/licences', to: 'licences#create_licences'
