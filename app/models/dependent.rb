@@ -5,7 +5,6 @@ class Dependent < ApplicationRecord
 
 
   def self.create_or_update_dependent(applicant, params)
-    params = params.deep_symbolize_keys
     if params[:id]
       dependent = Dependent.find_dependent_by_applicant(applicant, params[:id])
       if dependent
