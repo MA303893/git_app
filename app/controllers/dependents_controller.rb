@@ -2,7 +2,7 @@ class DependentsController < ApplicationController
   include ApplicantConcern
 
   def create_dependent
-    dependent = Dependent.create_or_update_dependent(@applicant, params)
+    dependent = Dependent.create_or_update_dependent(@applicant, params[:data])
     if dependent
       render :json => {dependent: @applicant.dependents.as_json, success: true}, success: true, status: 200
     else
@@ -11,7 +11,7 @@ class DependentsController < ApplicationController
   end
 
   def update_dependent
-    dependent = Dependent.create_or_update_dependent(@applicant, params)
+    dependent = Dependent.create_or_update_dependent(@applicant, params[:data])
     if dependent
       render :json => {dependent: @applicant.dependents.as_json, success: true}, success: true, status: 200
     else
