@@ -37,7 +37,7 @@ class DependentsController < ApplicationController
   private
 
   def dependent_params
-    params.require(:data).permit(:name, :gender, :dob, :relation)
+    params.require(:data).permit(Dependent::DEPENDENT_ALLOWED_PARAMS)
   end
 
 end
