@@ -5,7 +5,7 @@ class Qualification < ApplicationRecord
 
   def self.create_or_update_qualification(applicant, params, id = nil)
     if id
-      qual = Qualification.find_qualification_by_applicant(applicant, params[:id])
+      qual = Qualification.find_qualification_by_applicant(applicant, id)
       if qual
         qual.update_attributes(params.slice(*QUAL_ALLOWED_PARAMS))
         return qual
