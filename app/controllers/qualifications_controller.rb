@@ -2,8 +2,8 @@ class QualificationsController < ApplicationController
   include ApplicantConcern
 
   def create_qualification
-    params[:subjects] = params[:subjects].to_s
-    qual = Qualification.create_or_update_qualification(@applicant, params)
+    qual_params[:subjects] = qual_params[:subjects].to_s rescue nil
+    qual = Qualification.create_or_update_qualification(@applicant, qual_params)
     if qual
       render :json => {qualification: qual.as_json, success: true}, success: true, status: 200
     else
@@ -13,7 +13,7 @@ class QualificationsController < ApplicationController
 
   def update_qualifications
     params[:subjects] = params[:subjects].to_s
-    qual = Qualification.create_or_update_qualification(@applicant, params)
+    qual = Qualification.create_or_update_qualification(@applicant, qual_params)
     if qual
       render :json => {qualification: qual.as_json, success: true}, success: true, status: 200
     else
@@ -34,5 +34,11 @@ class QualificationsController < ApplicationController
     else
       render :json => unsuccessful_response("Cannot delete qualification without ID."), success: false, status: 400
     end
+  end
+
+  private
+
+  def qual_params
+    params.require(:data).permit(Qualification::QUAL_ALLOWED_PARAMS)
   end
 end
