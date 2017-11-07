@@ -1,5 +1,6 @@
 class ApplicantsController < ApplicationController
-  before_action :set_applicant#, only: [:profile, :qualifications_and_licences]
+  before_action :set_applicant #, only: [:profile, :qualifications_and_licences]
+  skip_before_action :authenticate_user!
 
   def update_personal_details
     if @applicant
@@ -10,6 +11,26 @@ class ApplicantsController < ApplicationController
   def profile
     if @applicant
       render :json => @applicant.personal_details_json, success: true, status: 200
+    end
+  end
+
+  def update_profile
+    case params[:type]
+      when 'personal_details'
+      when 'contact_details'
+      when 'criminal_convictions'
+      when 'emergency_contact'
+      when 'other'
+      else
+        #update fn ln, link_to_video etc
+    end
+  end
+
+  def update_picture
+    if @applicant.update_attributes(picture: params[:picture])
+      render :json => {profile_pic_url: @applicant.picture.url, success: true}, success: true, status: 200
+    else
+      render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 404
     end
   end
 
@@ -29,6 +50,14 @@ class ApplicantsController < ApplicationController
     if @applicant
       render :json => @applicant.extra_json
     end
+  end
+
+  def create_extra
+
+  end
+
+  def update_extra
+
   end
 
   def referals

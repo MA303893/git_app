@@ -221,6 +221,12 @@ class Applicant < ApplicationRecord
   PERSONAL_CONTACT_ALLOWED_PARAMS = [:address_line_1, :address_line_2, :suburb, :city, :state, :postcode, :country, :phone, :alt_email, :skype]
   PERSONAL_CRIMINAL_PARAMS = [:criminal_convicted, :criminal_convicted_value]
   PERSONAL_DETAILS_EMERGENCY_PARAMS = [:emergency_contact_name, :emergency_contact_email, :emergency_contact_phone, :emergency_contact_relation]
+  EXTRA_INFORMATION_PARAMS = [:registered_teacher, :can_coach_activities, :interests, :skills, :other_experiences, :comments]
+
+  def update_extra_info(params)
+    self.update_attributes(params.slice(*EXTRA_INFORMATION_PARAMS))
+  end
+
   def update_personal_details(params)
     self.update_attributes(params.slice(*PERSONAL_DETAILS_ALLOWED_PARAMS))
   end
