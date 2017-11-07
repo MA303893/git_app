@@ -5,7 +5,7 @@ class QualificationsController < ApplicationController
     qual_params[:subjects] = qual_params[:subjects].to_s rescue nil
     qual = Qualification.create_or_update_qualification(@applicant, qual_params)
     if qual
-      render :json => {qualification: qual.as_json, success: true}, success: true, status: 200
+      render :json => {qualifications: @applicant.qualifications.as_json, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Qualification could not be added! Please try again."), success: false, status: 400
     end
@@ -15,7 +15,7 @@ class QualificationsController < ApplicationController
     params[:subjects] = params[:subjects].to_s
     qual = Qualification.create_or_update_qualification(@applicant, qual_params)
     if qual
-      render :json => {qualification: qual.as_json, success: true}, success: true, status: 200
+      render :json => {qualifications: @applicant.qualifications.as_json, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Qualification could not be updated! Please try again."), success: false, status: 400
     end
