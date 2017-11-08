@@ -45,10 +45,12 @@ Rails.application.routes.draw do
   #licences
   post 'applicants/licences', to: 'licences#create_licences'
   put 'applicants/licences/:id', to: 'licences#update_licences'
+  delete 'applicants/licences/:id', to: 'licences#destroy'
 
   #references
   post 'applicants/references', to: 'references#create_referal'
   put 'applicants/references/:id', to: 'references#update_referal'
+  delete 'applicants/references/:id', to: 'references#destroy'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
