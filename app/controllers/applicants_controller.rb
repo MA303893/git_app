@@ -30,6 +30,7 @@ class ApplicantsController < ApplicationController
       when 'extra'
         @applicant.update_extra_info(params)
     end
+    @applicant.save
     if @applicant.errors.count == 0
       render :json => @applicant.personal_details_json, success: true, status: 200
     else
