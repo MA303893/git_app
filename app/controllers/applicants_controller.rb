@@ -18,17 +18,17 @@ class ApplicantsController < ApplicationController
 
     case params[:type]
       when 'personal_details'
-        @applicant.update_personal_details(params[:data])
+        @applicant.update_personal_details(get_data_from_params)
       when 'contact_details'
-        @applicant.update_contact_detail(params[:data])
+        @applicant.update_contact_detail(get_data_from_params)
       when 'criminal_convictions'
-        @applicant.update_criminal_details(params[:data])
+        @applicant.update_criminal_details(get_data_from_params)
       when 'emergency_contact'
-        @applicant.update_emergency_contact(params[:data])
+        @applicant.update_emergency_contact(get_data_from_params)
       when 'other'
-        @applicant.update_other_info(params[:data])
+        @applicant.update_other_info(get_data_from_params)
       when 'extra'
-        @applicant.update_extra_info(params[:data])
+        @applicant.update_extra_info(get_data_from_params)
     end
     # @applicant.save
     if @applicant.errors.count == 0
@@ -36,6 +36,10 @@ class ApplicantsController < ApplicationController
     else
       render :json => unsuccessful_response("Update unsuccessful!").merge({errors: @applicant.errors}), success: false, status: 400
     end
+  end
+
+  def get_data_from_params
+    params[:data]
   end
 
   def update_picture
