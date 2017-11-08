@@ -35,6 +35,7 @@ class Applicant < ApplicationRecord
             other_citizenship_country: self.other_citizenship_country
         },
         dependents: create_dependents_json,
+        languages: create_langauges_json,
         contact_details: {
             address_line_1: self.address_line_1,
             address_line_2: self.address_line_2,
@@ -79,6 +80,19 @@ class Applicant < ApplicationRecord
       dependents << res
     end
     dependents
+  end
+
+  def create_langauges_json
+    languages = []
+    self.languages.each do |lang|
+      res = {
+          id: lang.id,
+          name: lang.name,
+          proficiency: lang.proficiency
+      }
+      languages << res
+    end
+    languages
   end
 
   def email
