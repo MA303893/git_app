@@ -57,6 +57,14 @@ class ApplicationController < ActionController::Base
     # timing attacks.
     # if request.format == 'application/json'
       if user && Devise.secure_compare(user.auth_token, user_auth_token)
+        if ((Time.now.to_f - user.last_activity_at.to_f) > Devise.timeout_in.to_f)
+          #if user's token time is expired, then return 401
+          render :json => unsuccessful_response("Sorry, your session has expired. Please login again to continue."), success: false, status: 401
+        else
+          #update user last_activity_at
+          user.last_activity_at = Time.now
+          user.save
+        end
         sign_in(user, store: false)
       else
         render :json => unsuccessful_response("Sorry invalid email or token."), success: false, status: 401
