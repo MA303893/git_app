@@ -8,7 +8,7 @@ class Experience < ApplicationRecord
 
   def self.create_or_update_experience(applicant, params, id = nil)
     if id
-      experience = Experience.find_dependent_by_applicant(applicant, id)
+      experience = Experience.find_experience_by_applicant(applicant, id)
       if experience
         experience.update_attributes(params.slice(*EXPERIENCE_ALLOWED_PARAMS))
         return experience
