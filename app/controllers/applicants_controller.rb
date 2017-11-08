@@ -18,19 +18,19 @@ class ApplicantsController < ApplicationController
 
     case params[:type]
       when 'personal_details'
-        @applicant.update_personal_details(params)
+        @applicant.update_personal_details(params[:data])
       when 'contact_details'
-        @applicant.update_contact_detail(params)
+        @applicant.update_contact_detail(params[:data])
       when 'criminal_convictions'
-        @applicant.update_criminal_details(params)
+        @applicant.update_criminal_details(params[:data])
       when 'emergency_contact'
-        @applicant.update_emergency_contact(params)
+        @applicant.update_emergency_contact(params[:data])
       when 'other'
-        @applicant.update_other_info(params)
+        @applicant.update_other_info(params[:data])
       when 'extra'
-        @applicant.update_extra_info(params)
+        @applicant.update_extra_info(params[:data])
     end
-    @applicant.save
+    # @applicant.save
     if @applicant.errors.count == 0
       render :json => @applicant.personal_details_json, success: true, status: 200
     else
