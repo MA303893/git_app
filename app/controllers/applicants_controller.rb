@@ -43,7 +43,7 @@ class ApplicantsController < ApplicationController
   end
 
   def update_picture
-    if @applicant.update_attributes(picture:  Base64.decode64(params[:picture]))
+    if @applicant.update_attributes(picture:  params[:picture])
       render :json => {profile_pic_url: @applicant.picture.url, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 400
