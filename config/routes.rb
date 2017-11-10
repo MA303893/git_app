@@ -43,8 +43,8 @@ Rails.application.routes.draw do
   delete 'applicants/qualifications/:id', to: 'qualifications#destroy'
 
   #licences
-  post 'applicants/licences', to: 'licences#create_licences'
-  put 'applicants/licences/:id', to: 'licences#update_licences'
+  post 'applicants/licences', to: 'licences#create_licence'
+  put 'applicants/licences/:id', to: 'licences#update_licence'
   delete 'applicants/licences/:id', to: 'licences#destroy'
 
   #references
