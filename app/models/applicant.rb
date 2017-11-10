@@ -14,6 +14,7 @@ class Applicant < ApplicationRecord
   has_attached_file :picture, styles: {medium: "220x189>", small: "150x150>", thumb: "100x100>"}, default_url: "/images/:style/missing.png"
   validates_attachment_size :picture, :less_than => 1.megabytes
   validates_attachment :picture, content_type: {content_type: ['image/jpeg', 'image/png']}
+  # process_in_background :picture
 
   #adding paperclip for resume upload
   has_attached_file :resume
@@ -22,7 +23,7 @@ class Applicant < ApplicationRecord
 
   def personal_details_json
     response = {
-        profile_pic_url: self.picture.url,
+        profile_pic_url: self.picture(:medium),
         cv_url: self.resume.exists? ? self.resume.url : nil,
         personal_details: {
             country_of_citizenship: self.country_of_citizenship,
