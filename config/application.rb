@@ -32,5 +32,6 @@ module SchoolApp
     # config.active_job.queue_adapter = :resque
     #config.autoload_paths << Rails.root.join('app/worker')
     # Dir[Rails.root.join('app/services/*.rb')].each {|file| require file } #load files while overriding convention over configuration
+    config.middleware.use Rack::Attack
   end
 end
