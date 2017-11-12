@@ -50,18 +50,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_school_or_applicant
-    user = User.find_by_email(params[:email])
-    if params[:user_type].downcase == "applicant"
-      user.applicant = Applicant.new
+    user = User.find_by_email(params[:user][:email])
+    if params[:user_type].downcase == User::APPLICANT
+      applicant = Applicant.new
+      applicant.first_name = params[:user_info][:first_name]
+      applicant.first_name = params[:user_info][:last_name]
+      applicant.alt_email = params[:user_info][:alt_email]
+      user.applicant = applicant
       user.save
-    elsif params[:user_type].downcase == "school"
+    elsif params[:user_type].downcase == User::SCHOOL
       user.applicant = School.new
       user.save
     end
   end
 
   def validate_user_type
-    unless VALID_USER_TYPES.include?(params[:user_type].downcase)
+    unless VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
       render :json => {message: "Invalid User type", success: false}, success: true, status: 400
     end
   end

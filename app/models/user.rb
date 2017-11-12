@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
 
   before_save :ensure_authentication_token!
+  # after_save :create_school_or_applicant
 
   has_one :school, dependent: :destroy
   has_one :applicant, dependent: :destroy
@@ -14,6 +15,16 @@ class User < ApplicationRecord
   scope :school_admin, -> { where(user_type: 'school_admin') }
 
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
+  APPLICANT = "applicant"
+  SCHOOL = "school_admin"
+
+  # def create_school_or_applicant
+  #   if self.user_type.downcase == APPLICANT
+  #     self.applicant = Applicant.new
+  #   elsif self.user_type.downcase == SCHOOL
+  #     self.school = School.new
+  #   end
+  # end
 
   def send_devise_notification(notification, *args)
     # MailerJob.perform_later(notification.to_s, self, *args)
