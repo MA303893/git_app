@@ -178,6 +178,7 @@ class Applicant < ApplicationRecord
         skills: self.skills,
         other_experiences: self.other_experiences,
         comments: self.comments,
+        total_relevant_experience: self.total_relevant_experience,
         success: true
     }
   end
@@ -236,7 +237,7 @@ class Applicant < ApplicationRecord
   PERSONAL_CONTACT_ALLOWED_PARAMS = [:address_line_1, :address_line_2, :suburb, :city, :state, :postcode, :country, :phone, :alt_email, :skype]
   PERSONAL_CRIMINAL_PARAMS = [:criminal_convicted, :criminal_convicted_value]
   PERSONAL_DETAILS_EMERGENCY_PARAMS = [:emergency_contact_name, :emergency_contact_email, :emergency_contact_phone, :emergency_contact_relation]
-  EXTRA_INFORMATION_PARAMS = [:registered_teacher, :can_coach_activities, :interests, :skills, :other_experiences, :comments]
+  EXTRA_INFORMATION_PARAMS = [:registered_teacher, :can_coach_activities, :interests, :skills, :other_experiences, :comments, :total_relevant_experience]
   OTHER_INFO_PARAMS = [:first_name, :last_name, :link_to_video]
   def update_extra_info(params)
     self.update_attributes(params.slice(*EXTRA_INFORMATION_PARAMS))
