@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   protect_from_forgery with: :null_session, :if => Proc.new {|c| c.request.format == 'application/json'}
   before_action :authenticate_user_from_token! , :if => Proc.new {|c| c.request.format == 'application/json'}
-  before_action :authenticate_user!, except: [:user_unlock]
+  before_action :authenticate_user!, except: [:user_unlock, :user_confirm]
   respond_to :json, :html
 
   rescue_from Exception, :with => :render_500
