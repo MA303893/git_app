@@ -1,6 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  before_action :validate_user_for_authentication, only: [:create]
   skip_before_action :authenticate_user!, :authenticate_user_from_token!, :only => [:create, :new]
   after_action :create_school_or_applicant, only: [:create]
   after_action :update_school_or_applicant, only: [:update]
@@ -50,22 +51,29 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:sign_up, keys: [:timezone, :user_type, :user_info])
   end
 
+  def validate_user_for_authentication
+    user = User.find_by_email(params[:user][:email])
+    if user && user.active_for_authentication?
+      render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400
+    end
+  end
+
   def create_school_or_applicant
     user = User.find_by_email(params[:user][:email])
-    if user && params[:user][:user_type].downcase == User::APPLICANT
-      if  user.active_for_authentication?
+    if user
+      if params[:user][:user_type].downcase == User::APPLICANT
         applicant = Applicant.new
         applicant.first_name = params[:user][:user_info][:first_name]
         applicant.last_name = params[:user][:user_info][:last_name]
         applicant.alt_email = params[:user][:user_info][:alt_email]
         user.applicant = applicant
-      else
-        render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400
+        # user.save
+      elsif params[:user][:user_type].downcase == User::SCHOOL
+        user.applicant = School.new
+        # user.save
       end
-      # user.save
-    elsif params[:user][:user_type].downcase == User::SCHOOL
-      user.applicant = School.new
-      # user.save
+    else
+      render :json => {message: "User could not be registered! Please try again.", success: false}, success: false, status: 400
     end
   end
 
@@ -94,13 +102,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:timezone, :user_type, :user_info])
   end
 
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+# The path used after sign up.
+# def after_sign_up_path_for(resource)
+#   super(resource)
+# end
 
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+# The path used after sign up for inactive accounts.
+# def after_inactive_sign_up_path_for(resource)
+#   super(resource)
+# end
 end
