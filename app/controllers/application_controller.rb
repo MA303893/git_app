@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:user_unlock]
   respond_to :json, :html
 
+  rescue_from Exception, :with => :render_500
+
+  def render_500(exception)
+    @exception = exception
+    render :json => {errors: exception.message, success: false, message: "Please contact admin! code: A-C-12"}, success: false, status: 400
+  end
+
 
 
   def user_unlock
