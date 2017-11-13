@@ -52,16 +52,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create_school_or_applicant
     user = User.find_by_email(params[:user][:email])
-    if params[:user][:user_type].downcase == User::APPLICANT
-      applicant = Applicant.new
-      applicant.first_name = params[:user][:user_info][:first_name]
-      applicant.last_name = params[:user][:user_info][:last_name]
-      applicant.alt_email = params[:user][:user_info][:alt_email]
-      user.applicant = applicant
-      user.save
+    if user && params[:user][:user_type].downcase == User::APPLICANT
+      if  user.active_for_authentication?
+        applicant = Applicant.new
+        applicant.first_name = params[:user][:user_info][:first_name]
+        applicant.last_name = params[:user][:user_info][:last_name]
+        applicant.alt_email = params[:user][:user_info][:alt_email]
+        user.applicant = applicant
+      else
+        render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400
+      end
+      # user.save
     elsif params[:user][:user_type].downcase == User::SCHOOL
       user.applicant = School.new
-      user.save
+      # user.save
     end
   end
 
