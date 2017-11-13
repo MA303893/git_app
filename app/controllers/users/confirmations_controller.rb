@@ -18,7 +18,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       # set_flash_message!(:notice, :confirmed)
       # respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
       # render :json => {user: {email: resource.email, :message => "Your account has been confirmed."}}, success: true and return
-      redirect_to USER_CONFIRMATION_URL
+      redirect_to USER_CONFIRMATION_URL+"/?confirmLogin=true"
     else
       # respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
       render :json => {user: {email: resource.email, :errors => resource.errors, status: :unprocessable_entity}}, success: true and return
