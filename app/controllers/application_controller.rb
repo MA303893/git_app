@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     redirect_to :controller => 'users/unlocks', :action => 'show', unlock_token: params[:unlock_token]
   end
 
+  def user_confirm
+    redirect_to :controller => 'users/confirmations', :action => 'show', confirmation_token: params[:confirmation_token]
+  end
+
   def timezones
     zones = ActiveSupport::TimeZone.all
     if zones

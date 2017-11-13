@@ -5,11 +5,13 @@ Rails.application.routes.draw do
   get "home/index"
   get "get_user", to: "home#get_user"
   get "unlock_user", to: "application#user_unlock", as: :user_unlock
+  get "confirm_user", to: "application#user_confirm", as: :user_confirm
 
   devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
-      unlocks: 'users/unlocks'
+      unlocks: 'users/unlocks',
+      confirmations: 'users/confirmations'
   }
   namespace :applicants do
     get "profile"
