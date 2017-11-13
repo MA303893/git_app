@@ -46,19 +46,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:timezone, :user_type])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:timezone, :user_type, :user_info])
   end
 
   def create_school_or_applicant
     user = User.find_by_email(params[:user][:email])
-    if params[:user_type].downcase == User::APPLICANT
+    if params[:user][:user_type].downcase == User::APPLICANT
       applicant = Applicant.new
-      applicant.first_name = params[:user_info][:first_name]
-      applicant.first_name = params[:user_info][:last_name]
-      applicant.alt_email = params[:user_info][:alt_email]
+      applicant.first_name = params[:user][:user_info][:first_name]
+      applicant.first_name = params[:user][:user_info][:last_name]
+      applicant.alt_email = params[:user][:user_info][:alt_email]
       user.applicant = applicant
       user.save
-    elsif params[:user_type].downcase == User::SCHOOL
+    elsif params[:user][:user_type].downcase == User::SCHOOL
       user.applicant = School.new
       user.save
     end
@@ -72,7 +72,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:timezone, :user_type])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:timezone, :user_type, :user_info])
   end
 
   # The path used after sign up.
