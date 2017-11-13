@@ -53,8 +53,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def validate_user_for_authentication
     user = User.find_by_email(params[:user][:email])
-    if user && user.active_for_authentication?
-      render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400
+    if user && !user.active_for_authentication?
+      render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400 and return
     end
   end
 
@@ -62,18 +62,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     user = User.find_by_email(params[:user][:email])
     if user
       if params[:user][:user_type].downcase == User::APPLICANT
-        applicant = Applicant.new
+        applicant = user.applicant || Applicant.new
         applicant.first_name = params[:user][:user_info][:first_name]
         applicant.last_name = params[:user][:user_info][:last_name]
         applicant.alt_email = params[:user][:user_info][:alt_email]
         user.applicant = applicant
         # user.save
       elsif params[:user][:user_type].downcase == User::SCHOOL
-        user.applicant = School.new
+        user.applicant = user.school || School.new
         # user.save
       end
     else
-      render :json => {message: "User could not be registered! Please try again.", success: false}, success: false, status: 400
+      render :json => {message: "User could not be registered! Please try again.", success: false}, success: false, status: 400 and return
     end
   end
 
@@ -92,8 +92,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def validate_user_type
-    unless VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
-      render :json => {message: "Invalid User type", success: false}, success: false, status: 400
+    if params[:user][:user_type].nil?
+      render :json => {message: "Invalid User type|User type must be present", success: false}, success: false, status: 400 and return
+    elsif !VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
+      render :json => {message: "Invalid User type", success: false}, success: false, status: 400 and return
     end
   end
 
