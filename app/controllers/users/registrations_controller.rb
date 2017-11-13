@@ -2,8 +2,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   skip_before_action :authenticate_user!, :authenticate_user_from_token!, :only => [:create, :new]
-  after_action: :create_school_or_applicant, only: [:create]
-  before_action: :validate_user_type, only: [:create]
+  after_action :create_school_or_applicant, only: [:create]
+  before_action :validate_user_type, only: [:create]
   respond_to :json
 
   VALID_USER_TYPES = [User::APPLICANT, User::SCHOOL]
