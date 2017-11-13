@@ -3,10 +3,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
   skip_before_action :authenticate_user!, :authenticate_user_from_token!, :only => [:create, :new]
   after_action: :create_school_or_applicant, only: [:create]
-  before_action: :validate_user_type, only: :create
+  before_action: :validate_user_type, only: [:create]
   respond_to :json
 
-  VALID_USER_TYPES = ["applicant", "school"]
+  VALID_USER_TYPES = [User::APPLICANT, User::SCHOOL]
 
   # GET /resource/sign_up
   # def new
@@ -66,7 +66,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def validate_user_type
     unless VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
-      render :json => {message: "Invalid User type", success: false}, success: true, status: 400
+      render :json => {message: "Invalid User type", success: false}, success: false, status: 400
     end
   end
 
