@@ -3,6 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
   skip_before_action :authenticate_user!, :authenticate_user_from_token!, :only => [:create, :new]
   after_action :create_school_or_applicant, only: [:create]
+  after_action :update_school_or_applicant, only: [:update]
   before_action :validate_user_type, only: [:create]
   respond_to :json
 
@@ -54,10 +55,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if params[:user][:user_type].downcase == User::APPLICANT
       applicant = Applicant.new
       applicant.first_name = params[:user][:user_info][:first_name]
-      applicant.first_name = params[:user][:user_info][:last_name]
+      applicant.last_name = params[:user][:user_info][:last_name]
       applicant.alt_email = params[:user][:user_info][:alt_email]
       user.applicant = applicant
       user.save
+    elsif params[:user][:user_type].downcase == User::SCHOOL
+      user.applicant = School.new
+      user.save
+    end
+  end
+
+  def update_school_or_applicant
+    user = User.find_by_email(params[:user][:email])
+    if params[:user][:user_type].downcase == User::APPLICANT
+      applicant = user.applicant
+      applicant.first_name = params[:user][:user_info][:first_name]
+      applicant.last_name = params[:user][:user_info][:last_name]
+      applicant.alt_email = params[:user][:user_info][:alt_email]
+      applicant.save
     elsif params[:user][:user_type].downcase == User::SCHOOL
       user.applicant = School.new
       user.save
