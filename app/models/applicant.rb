@@ -11,15 +11,15 @@ class Applicant < ApplicationRecord
   has_many :references, dependent: :destroy
 
   #adding paperclip for profile pic upload
-  has_attached_file :picture, styles: {medium: "220x220>", small: "150x150>", thumb: "100x100>"}, default_url: "/system/image-missing.png"
+  has_attached_file :picture#, styles: {medium: "220x220>", small: "150x150>", thumb: "100x100>"}#, default_url: "/system/image-missing.png"
   validates_attachment_size :picture, :less_than => 1.megabytes
   validates_attachment :picture, content_type: {content_type: ['image/jpeg', 'image/png']}
   # process_in_background :picture
 
   #adding paperclip for resume upload
-  has_attached_file :resume
+  has_attached_file :resume, :path => ":rails_root/public/system/:class/:attachment/:id/:style/:filename.:extension"
   validates_attachment_size :resume, :less_than => 1.megabytes
-  validates_attachment :resume, content_type: {content_type: "application/pdf"}
+  validates_attachment :resume, content_type: {content_type: ["application/pdf"]}
 
   def personal_details_json
     response = {
