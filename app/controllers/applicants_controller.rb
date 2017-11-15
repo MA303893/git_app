@@ -53,6 +53,7 @@ class ApplicantsController < ApplicationController
   def update_resume
     if params[:resume]
       @applicant.resume = Paperclip.io_adapters.for(params[:resume])
+      @applicant.resume.original_filename = 'data-resume.pdf'
       @applicant.save
     # end
     # if @applicant.update_attributes(resume: params[:resume])
