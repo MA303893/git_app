@@ -50,6 +50,14 @@ class ApplicantsController < ApplicationController
     end
   end
 
+  def update_resume
+    if @applicant.update_attributes(picture:  params[:resume])
+      render :json => {resume: @applicant.resume.url, success: true}, success: true, status: 200
+    else
+      render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 400
+    end
+  end
+
   def qualifications_and_licences
     if @applicant
       render :json => @applicant.qualification_and_licences_json

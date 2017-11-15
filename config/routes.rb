@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   #Update applicant profile
   post 'applicants/profile/picture', to: 'applicants#update_picture'
+  post 'applicants/profile/resume', to: 'applicants#update_resume'
   put 'applicants/profile/:type', to: 'applicants#update_profile'
 
   #dependent
