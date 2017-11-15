@@ -272,7 +272,4 @@ class Applicant < ApplicationRecord
     self.joins(:user).find_by('users.auth_token': auth_token, 'users.email': email)
   end
 
-  private
-  def parse_image
-    resume = Paperclip.io_adapters.for(image_base) image.original_filename = "file.jpg" self.picture = image end
 end
