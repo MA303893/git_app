@@ -43,7 +43,7 @@ class ApplicantsController < ApplicationController
   end
 
   def update_picture
-    if @applicant.update_attributes(picture:  params[:picture])
+    if @applicant.update_attributes(picture: params[:picture])
       render :json => {profile_pic_url: @applicant.picture.url, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Could not upload the image").merge({errors: @applicant.errors}), success: false, status: 400
@@ -51,7 +51,11 @@ class ApplicantsController < ApplicationController
   end
 
   def update_resume
-    if @applicant.update_attributes(resume:  params[:resume])
+    if params[:resume]
+      @applicant.resume = Paperclip.io_adapters.for(params[:resume])
+      @applicant.save
+    # end
+    # if @applicant.update_attributes(resume: params[:resume])
       render :json => {resume: @applicant.resume.url, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Could not upload resume").merge({errors: @applicant.errors}), success: false, status: 400
