@@ -29,6 +29,7 @@ class ApplicantsController < ApplicationController
         @applicant.update_other_info(get_data_from_params)
       when 'extra'
         @applicant.update_extra_info(get_data_from_params)
+        render json: {extra: @applicant.slice(*Applicant::EXTRA_INFORMATION_PARAMS), success: true}, success: true, status: 200 and return
     end
     # @applicant.save
     if @applicant.errors.count == 0
@@ -52,11 +53,12 @@ class ApplicantsController < ApplicationController
 
   def update_resume
     if params[:resume]
-      @applicant.resume = Paperclip.io_adapters.for(params[:resume])
-      @applicant.resume.original_filename = 'data-resume.pdf'
+      resume = Paperclip.io_adapters.for(params[:resume])
+      resume.original_filename = 'data-resume.pdf'
+      @applicant.resume = resume
       @applicant.save
-    # end
-    # if @applicant.update_attributes(resume: params[:resume])
+      # end
+      # if @applicant.update_attributes(resume: params[:resume])
       render :json => {resume: @applicant.resume.url, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Could not upload resume").merge({errors: @applicant.errors}), success: false, status: 400
