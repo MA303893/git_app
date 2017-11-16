@@ -23,7 +23,7 @@ class Applicant < ApplicationRecord
 
   def personal_details_json
     response = {
-        profile_pic_url: self.picture(:medium),
+        profile_pic_url: self.picture,
         cv_url: self.resume.exists? ? self.resume.url : nil,
         personal_details: {
             country_of_citizenship: self.country_of_citizenship,
