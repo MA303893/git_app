@@ -57,8 +57,6 @@ class ApplicantsController < ApplicationController
       resume.original_filename = 'data-resume.pdf'
       @applicant.resume = resume
       @applicant.save
-      # end
-      # if @applicant.update_attributes(resume: params[:resume])
       render :json => {resume: @applicant.resume.url, success: true}, success: true, status: 200
     else
       render :json => unsuccessful_response("Could not upload resume").merge({errors: @applicant.errors}), success: false, status: 400

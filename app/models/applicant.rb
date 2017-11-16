@@ -17,7 +17,7 @@ class Applicant < ApplicationRecord
   # process_in_background :picture
 
   #adding paperclip for resume upload
-  has_attached_file :resume, :path => ":rails_root/public/system/:class/:attachment/:id/:style/:filename.:extension"
+  has_attached_file :resume, :path => "public/system/:class/:attachment/:id/:filename", :url => "/system/:class/:attachment/:id/:basename.:extension"
   validates_attachment_size :resume, :less_than => 1.megabytes
   validates_attachment :resume, content_type: {content_type: ["application/pdf"]}
 
