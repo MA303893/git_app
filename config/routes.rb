@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   #experiences
   post 'applicants/experiences', to: 'experiences#create_experiences'
   put 'applicants/experiences/:id', to: 'experiences#update_experiences'
+  delete 'applicants/experiences/:id', to: 'experiences#destroy'
 
   #qualifications
   post 'applicants/qualifications', to: 'qualifications#create_qualifications'
