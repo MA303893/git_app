@@ -204,33 +204,36 @@ class Applicant < ApplicationRecord
   end
 
   def create_referals_json
-    referals = []
-    self.references.each do |r|
-      res = {
-          id: r.id,
-          name: r.name,
-          relation: r.relation,
-          first_name: r.first_name,
-          last_name: r.last_name,
-          email: r.email,
-          phone: r.phone,
-          address_lin1: r.address_lin1,
-          address_line2: r.address_line2,
-          suburb: r.suburb,
-          city: r.city,
-          state: r.state,
-          country: r.country,
-          school_name: r.school_name,
-          school_city: r.school_city,
-          school_state: r.school_state,
-          school_country: r.school_country,
-          worked_from: r.worked_from,
-          worked_to: r.worked_to,
-          type: r.type
-      }
-      referals << res
-    end
-    referals
+    # referals = []
+    {
+        "referals" : self.references.group_by(&:type).as_json
+    }
+    # self.references.each do |r|
+    #   res = {
+    #       id: r.id,
+    #       name: r.name,
+    #       relation: r.relation,
+    #       first_name: r.first_name,
+    #       last_name: r.last_name,
+    #       email: r.email,
+    #       phone: r.phone,
+    #       address_lin1: r.address_lin1,
+    #       address_line2: r.address_line2,
+    #       suburb: r.suburb,
+    #       city: r.city,
+    #       state: r.state,
+    #       country: r.country,
+    #       school_name: r.school_name,
+    #       school_city: r.school_city,
+    #       school_state: r.school_state,
+    #       school_country: r.school_country,
+    #       worked_from: r.worked_from,
+    #       worked_to: r.worked_to,
+    #       type: r.type
+    #   }
+    #   referals << res
+    # end
+    # referals
   end
 
   PERSONAL_DETAILS_ALLOWED_PARAMS = [:country_of_citizenship, :country_of_birth, :eu_passport, :dob, :gender, :marital_status, :other_citizenship, :other_citizenship_country]
