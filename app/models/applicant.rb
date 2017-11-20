@@ -198,7 +198,7 @@ class Applicant < ApplicationRecord
 
   def referals_json
     response = {
-        referals: create_referals_json,
+        references: create_referals_json,
         success: true
     }
   end
