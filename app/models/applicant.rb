@@ -205,7 +205,7 @@ class Applicant < ApplicationRecord
 
   def create_referals_json
     referals = []
-    self.referals.each do |r|
+    self.references.each do |r|
       res = {
           id: r.id,
           name: r.name,
