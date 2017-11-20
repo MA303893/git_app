@@ -89,7 +89,7 @@ class ApplicantsController < ApplicationController
 
   end
 
-  def referals
+  def references
     if @applicant
       render :json => @applicant.referals_json
     end

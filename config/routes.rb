@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     # get "", to: "#qualifications_and_licences"
     get "experiences"
     get "extra"
-    get "referals"
+    get "references"
   end
   match "applicants/qualifications", to: "applicants#qualifications_and_licences", :via => [:get]
   get 'timezones', to: "application#timezones"
