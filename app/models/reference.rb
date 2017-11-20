@@ -3,7 +3,7 @@ class Reference < ApplicationRecord
 
   REFERENCE_ALLOWED_PARAMS = [
       :name, :relation, :first_name, :last_name, :email, :phone, :address_lin1, :address_line2, :suburb, :city,
-      :state, :country, :school_name, :school_city, :school_state, :school_country, :worked_from, :worked_to, :type
+      :state, :country, :school_name, :school_city, :school_state, :school_country, :worked_from, :worked_to, :reference_type
   ]
 
 
