@@ -3,4 +3,3 @@ class AddActiveToSchools < ActiveRecord::Migration[5.1]
     add_column :schools, :active, :boolean, null: false, default: false
   end
 end
-r

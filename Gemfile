@@ -54,3 +54,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'omniauth'
 gem 'rack-cors'
+gem "paperclip"
+gem 'delayed_paperclip'
+
+gem 'city-state'
+gem 'i18n_data'
+
+gem 'rack-attack'

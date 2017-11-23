@@ -32,6 +32,11 @@ class Users::SessionsController < Devise::SessionsController
         if resource.active_for_authentication?
           if resource.valid_password?(params[:user][:password])
             resource.failed_attempts = 0
+            # resource.last_sign_in_at = Time.now
+            resource.last_activity_at = Time.now
+            resource.last_sign_in_ip = resource.current_sign_in_ip
+            resource.current_sign_in_ip = request.ip
+            resource.auth_token = nil
             resource.save(validate: false)
             render :json => {user: {email: resource.email, :auth_token => resource.auth_token}, success: true}, success: true, status: :created
           else
@@ -53,9 +58,9 @@ class Users::SessionsController < Devise::SessionsController
         user = User.find_by_auth_token(request.headers['X-API-TOKEN'])
         if user
           user.reset_authentication_token!
-          render :json => {:message => 'Session deleted.'}, :success => true, :status => 200
+          render :json => {:message => 'Session deleted.', success: true}, :success => true, :status => 200
         else
-          render :json => {:message => 'Invalid token.'}, :status => 404
+          render :json => {:message => 'Invalid token.', success: false}, :status => 404
         end
       }
     end
