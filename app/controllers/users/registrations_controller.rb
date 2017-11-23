@@ -69,7 +69,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         user.applicant = applicant
         # user.save
       elsif params[:user][:user_type].downcase == User::SCHOOL
-        user.applicant = user.school || School.new
+        school = user.school || School.new
+        school.city =  params[:user][:user_info][:school_name]
+        user.school = school
         # user.save
       end
     else

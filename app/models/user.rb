@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   BLACKLIST_FOR_SERIALIZATION = [:auth_token, :id]
   APPLICANT = "applicant"
-  SCHOOL = "school_admin"
+  SCHOOL = "school"
 
   # def create_school_or_applicant
   #   if self.user_type.downcase == APPLICANT
