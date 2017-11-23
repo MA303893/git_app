@@ -70,7 +70,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # user.save
       elsif params[:user][:user_type].downcase == User::SCHOOL
         school = user.school || School.new
-        school.city =  params[:user][:user_info][:school_name]
+        school.school_name =  params[:user][:user_info][:school_name]
         user.school = school
         # user.save
       end
@@ -88,9 +88,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       applicant.alt_email = params[:user][:user_info][:alt_email]
       applicant.save
     elsif params[:user][:user_type].downcase == User::SCHOOL
-      user.applicant = School.new
-      user.save
-    end
+      school = user.school
+      school.school_name =  params[:user][:user_info][:school_name]
+      school.save
+    endg
   end
 
   def validate_user_type

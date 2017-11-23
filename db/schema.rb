@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120160609) do
+ActiveRecord::Schema.define(version: 20171123175607) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -200,6 +200,25 @@ ActiveRecord::Schema.define(version: 20171120160609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: false, null: false
+    t.string "city"
+    t.string "country"
+    t.string "email"
+    t.string "fax"
+    t.string "geographic_region"
+    t.string "governed_by"
+    t.string "phone"
+    t.string "postal_code"
+    t.string "school_name"
+    t.string "state"
+    t.string "street_1"
+    t.string "street_2"
+    t.string "submitted_by"
+    t.string "submitted_by_email"
+    t.string "website"
+    t.string "year_founded"
+    t.string "percent_complete"
+    t.integer "step_no"
+    t.boolean "new_registration"
     t.index ["user_id"], name: "index_schools_on_user_id"
   end
 
