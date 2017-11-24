@@ -58,8 +58,8 @@ Rails.application.routes.draw do
 
 
   ####SCHOOL####
-  get 'schools/profile', to 'schools#profile'
-  put 'schools/profile', to 'schools#update'
+  get 'schools/profile', to: 'schools#profile'
+  put 'schools/profile', to: 'schools#update'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
