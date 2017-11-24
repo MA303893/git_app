@@ -56,5 +56,10 @@ Rails.application.routes.draw do
   put 'applicants/references/:id', to: 'references#update_referal'
   delete 'applicants/references/:id', to: 'references#destroy'
 
+
+  ####SCHOOL####
+  get 'schools/profile', to 'schools#profile'
+  put 'schools/profile', to 'schools#update'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
