@@ -93,19 +93,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
       school.save
       endg
     end
+  end
 
-    def validate_user_type
-      if params[:user][:user_type].nil?
-        render :json => {message: "Invalid User type|User type must be present", success: false}, success: false, status: 400 and return
-      elsif !VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
-        render :json => {message: "Invalid User type", success: false}, success: false, status: 400 and return
-      end
+  def validate_user_type
+    if params[:user][:user_type].nil?
+      render :json => {message: "Invalid User type|User type must be present", success: false}, success: false, status: 400 and return
+    elsif !VALID_USER_TYPES.include?(params[:user][:user_type].downcase)
+      render :json => {message: "Invalid User type", success: false}, success: false, status: 400 and return
     end
+  end
 
-    # If you have extra params to permit, append them to the sanitizer.
-    def configure_account_update_params
-      devise_parameter_sanitizer.permit(:account_update, keys: [:timezone, :user_type, :user_info])
-    end
+  # If you have extra params to permit, append them to the sanitizer.
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:timezone, :user_type, :user_info])
+  end
 
 # The path used after sign up.
 # def after_sign_up_path_for(resource)
@@ -116,5 +117,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # def after_inactive_sign_up_path_for(resource)
 #   super(resource)
 # end
-  end
 end
