@@ -53,8 +53,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def validate_user_for_authentication
     user = User.find_by_email(params[:user][:email])
-    if user && !user.active_for_authentication?
-      render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400 and return
+    if user
+      if !user.active_for_authentication?
+        render :json => {message: "User is already registered! Please follow the instructions in the email to confirm your account.", success: false}, success: false, status: 400 and return
+      else
+        render :json => {message: "Email is already taken! Please try a different email id.", success: false}, success: false, status: 400 and return
+      end
     end
   end
 
