@@ -38,7 +38,9 @@ class Users::SessionsController < Devise::SessionsController
             resource.current_sign_in_ip = request.ip
             resource.auth_token = nil
             resource.save(validate: false)
-            render :json => {user: {email: resource.email, :auth_token => resource.auth_token, user_type: resource.user_type}, success: true}, success: true, status: :created
+            login_response = {user: {email: resource.email, :auth_token => resource.auth_token, user_type: resource.user_type}, success: true}
+            login_response[:user].merge!({step_no: resource.step_no, new_registration: resource.new_registration}) if resource.user_type == User::SCHOOL
+            render :json => login_response, success: true, status: :created
           else
             invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
           end
