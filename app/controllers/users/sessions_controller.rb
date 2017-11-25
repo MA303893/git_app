@@ -38,7 +38,7 @@ class Users::SessionsController < Devise::SessionsController
             resource.current_sign_in_ip = request.ip
             resource.auth_token = nil
             resource.save(validate: false)
-            render :json => {user: {email: resource.email, :auth_token => resource.auth_token}, success: true}, success: true, status: :created
+            render :json => {user: {email: resource.email, :auth_token => resource.auth_token, user_type: resource.user_type}, success: true}, success: true, status: :created
           else
             invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
           end
