@@ -9,7 +9,14 @@ class SchoolsController < ApplicationController
   end
 
   def update
-
+    if @school
+      @school.update_school(get_data_from_params)
+      if @school.errors.count == 0
+        render :json => @school.as_json, success: true, status: 200
+      else
+        render :json => unsuccessful_response("Update unsuccessful!").merge({errors: @school.errors}), success: false, status: 400
+      end
+    end
   end
 
   def get_data_from_params

@@ -7,7 +7,7 @@ class School < ApplicationRecord
   SCHOOLS_ALLOWED_PARAMS = [:country_of_citizenship, :country_of_birth, :eu_passport, :dob, :gender, :marital_status, :other_citizenship, :other_citizenship_country]
 
   def update_school(params)
-
+    self.update_attributes(params.slice(*SCHOOLS_ALLOWED_PARAMS))
   end
 
   def self.get_school_by_auth_token_and_email auth_token, email
