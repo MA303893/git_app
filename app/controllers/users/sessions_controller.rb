@@ -39,7 +39,7 @@ class Users::SessionsController < Devise::SessionsController
             resource.auth_token = nil
             resource.save(validate: false)
             login_response = {user: {email: resource.email, :auth_token => resource.auth_token, user_type: resource.user_type}, success: true}
-            login_response[:user].merge!({step_no: resource.school.try(:step_no), new_registration: resource.school.try(:new_registration)}) if resource.user_type == User::SCHOOL
+            login_response[:user].merge!({step_no: resource.school.try(:step_no), new_registration: resource.school.try(:new_registration), details_updated: resource.school.try(:details_updated)}) if resource.user_type == User::SCHOOL
             render :json => login_response, success: true, status: :created
           else
             invalid_login_attempt({attempts_remaining: resource.attempts_remaining})
