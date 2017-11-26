@@ -11,8 +11,8 @@ class School < ApplicationRecord
                             :middle_name, :name, :title, :step_no, :city,
                             :country, :fax, :geographic_region, :governed_by,
                             :phone, :postal_code, :school_name, :state, :street_1,
-                            :street_2, :new_registration, :submitted_by, :submitted_by_email,
-                            :website, :year_founded, :percent_complete]
+                            :street_2, :submitted_by, :submitted_by_email,
+                            :website, :year_founded, :percent_complete, :details_updated]
 
   def update_school(params)
     self.update_attributes(params.slice(*SCHOOLS_ALLOWED_PARAMS))
