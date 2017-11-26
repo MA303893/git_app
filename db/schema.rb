@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123175607) do
+ActiveRecord::Schema.define(version: 20171126145807) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -219,6 +219,12 @@ ActiveRecord::Schema.define(version: 20171123175607) do
     t.string "percent_complete"
     t.integer "step_no"
     t.boolean "new_registration"
+    t.string "designation"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "middle_name"
+    t.string "name"
+    t.string "title"
     t.index ["user_id"], name: "index_schools_on_user_id"
   end
 

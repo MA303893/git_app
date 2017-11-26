@@ -11,6 +11,8 @@ class SchoolsController < ApplicationController
   def update
     if @school
       @school.update_school(get_data_from_params)
+      @school.new_registration = false
+      @school.save
       if @school.errors.count == 0
         render :json => @school.as_json, success: true, status: 200
       else
