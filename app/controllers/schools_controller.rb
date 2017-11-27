@@ -4,11 +4,7 @@ class SchoolsController < ApplicationController
 
   def index
     @schools = School.all
-    if @schools.errors.count == 0
-      render :json => @schools.as_json, success: true, status: 200
-    else
-      render :json => unsuccessful_response("Schools enot found!").merge({errors: @schools.errors}), success: false, status: 400
-    end
+    render :json => @schools.as_json, success: true, status: 200
   end
 
   def profile
