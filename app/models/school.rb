@@ -1,7 +1,7 @@
 class School < ApplicationRecord
   belongs_to :user, dependent: :destroy
   has_many :jobs, dependent: :destroy
-  before_save: :add_email
+  before_save :add_email
 
   scope :activated, -> {where(active: true)}
 
