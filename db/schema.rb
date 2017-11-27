@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126160422) do
+ActiveRecord::Schema.define(version: 20171127053748) do
 
   create_table "applicant_documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "applicant_id"
@@ -123,6 +123,13 @@ ActiveRecord::Schema.define(version: 20171126160422) do
     t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "title"
+    t.text "description"
+    t.string "location"
+    t.text "skills"
+    t.text "about_school"
+    t.integer "no_of_opennings"
+    t.boolean "active", default: false
     t.index ["school_id"], name: "index_jobs_on_school_id"
   end
 

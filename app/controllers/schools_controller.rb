@@ -1,6 +1,15 @@
 class SchoolsController < ApplicationController
   before_action :set_school #, only: [:profile, :qualifications_and_licences]
-  # skip_before_action :authenticate_user!
+  skip_before_action :set_school, only: [:index]
+
+  def index
+    @schools = School.all
+    if @schools.errors.count == 0
+      render :json => @schools.as_json, success: true, status: 200
+    else
+      render :json => unsuccessful_response("Schools enot found!").merge({errors: @schools.errors}), success: false, status: 400
+    end
+  end
 
   def profile
     if @school
