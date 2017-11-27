@@ -1,6 +1,7 @@
 class School < ApplicationRecord
   belongs_to :user, dependent: :destroy
   has_many :jobs, dependent: :destroy
+  before_save: :add_email
 
   scope :activated, -> {where(active: true)}
 
@@ -20,5 +21,9 @@ class School < ApplicationRecord
 
   def self.get_school_by_auth_token_and_email auth_token, email
     self.joins(:user).find_by('users.auth_token': auth_token, 'users.email': email)
+  end
+
+  def add_email
+    self.email = self.user.email rescue nil
   end
 end
