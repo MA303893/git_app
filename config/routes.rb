@@ -62,5 +62,15 @@ Rails.application.routes.draw do
   put 'schools/profile', to: 'schools#update'
   get 'schools', to: 'schools#index'
 
+  ####JOBS####
+  scope :schools do
+    # resource :jobs, only: [:show, :update, :destroy, :create]
+    get 'jobs', to: 'jobs#index'
+    get 'jobs/:id', to: 'jobs#show'
+    post 'jobs', to: 'jobs#create'
+    put 'jobs/:id', to: 'jobs#update'
+    delete 'jobs/:id', to: 'jobs#destroy'
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
