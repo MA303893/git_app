@@ -1,6 +1,6 @@
 class SchoolsController < ApplicationController
   before_action :set_school #, only: [:profile, :qualifications_and_licences]
-  skip_before_action :set_school, only: [:index]
+  skip_before_action :set_school, only: [:index, :show]
 
   def index
     @schools = School.all
