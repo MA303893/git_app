@@ -13,6 +13,15 @@ class SchoolsController < ApplicationController
     end
   end
 
+  def show
+    school = School.find_by(id: params[:id])
+    if school
+      render :json => school.as_json, success: true, status: 200
+    else
+      render :json => unsuccessful_response("School Not Found"), success: false, status: 404
+    end
+  end
+
   def update
     if @school
       @school.update_school(get_data_from_params)

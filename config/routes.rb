@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   ####SCHOOL####
   get 'schools/profile', to: 'schools#profile'
   put 'schools/profile', to: 'schools#update'
+  get 'schools/:id', to: 'schools#show'
   get 'schools', to: 'schools#index'
 
   ####JOBS####
